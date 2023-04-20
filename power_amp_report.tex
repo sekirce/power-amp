@@ -113,8 +113,12 @@ Abstract from \href{https://www.sciengine.com/SCIS/doi/10.1007/s11432-016-0299-4
 Abstract from \href{https://ieeexplore.ieee.org/document/4456783}{Fully Integrated CMOS Power Amplifier With Efficiency Enhancement at Power Back-Off}, Gang Liu, Peter Haldi, Tsu-Jae King Liu, Fellow, IEEE, and Ali M. Niknejad, Member, IEEE
 
 \begin{info}
-	\textbf{Abstract} — This paper presents a new approach for power amplifier design using deep submicron CMOS technologies. A trans former based voltage combiner is proposed to combine power generated from several low-voltage CMOS amplifiers. Unlike other voltage combining transformers, the architecture presented in this paper provides greater flexibility to access and control the individual amplifiers in a voltage combined amplifier. In this work this voltage combining transformer has been utilized to control output power and improve average efficiency at power back-off. This technique does not degrade instantaneous efficiency at peak power and maintains voltage gain with power back-off. A 1.2 V, 2.4 GHz fully integrated CMOS power amplifier prototype was implemented with thin-oxide transistors in a 0.13 m RF-CMOS process to demonstrate the concept. Neither off-chip components nor bondwires are used for output matching. The power amplifier transmits 24 dBm power with 25\% drain efficiency at 1 dB compression point. When driven into saturation, it transmits 27 dBm peak power with 32\% drain efficiency. At power back-off, efficiency is greatly improved in the prototype which employs average efficiency enhancement circuitry.
+	\textbf{Abstract} — This paper presents a new approach for power amplifier design using deep submicron CMOS technologies. A transformer based voltage combiner is proposed to combine power generated from several low-voltage CMOS amplifiers. Unlike other voltage combining transformers, the architecture presented in this paper provides greater flexibility to access and control the individual amplifiers in a voltage combined amplifier. In this work this voltage combining transformer has been utilized to control output power and improve average efficiency at power back-off. This technique does not degrade instantaneous efficiency at peak power and maintains voltage gain with power back-off. A 1.2 V, 2.4 GHz fully integrated CMOS power amplifier prototype was implemented with thin-oxide transistors in a 0.13 m RF-CMOS process to demonstrate the concept. Neither off-chip components nor bondwires are used for output matching. The power amplifier transmits 24 dBm power with 25\% drain efficiency at 1 dB compression point. When driven into saturation, it transmits 27 dBm peak power with 32\% drain efficiency. At power back-off, efficiency is greatly improved in the prototype which employs average efficiency enhancement circuitry.
 \end{info}
+
+% why does this transformer have greater flexibility
+
+% neither the off-chip components nor bondwires are used for output matching
 
 The cascode gate is connected to the supply node when the individual amplifier is on, and it is grounded to turn off the individual amplifier for power back-off (to improve PAE when the output power is backed off).\\
 
@@ -195,7 +199,7 @@ And is there going to be some relaxation for OIP3 from this existing design or d
 
 My additional question is what is the input power for this power amplifier? And does it have any output signal control inside it or does it happen before it?
 
-
+\newpage
 
 \subsection{How to introduce yourself}
 
@@ -232,13 +236,43 @@ My example:\\
 \end{question}
 
 
-% \begin{info} % Information block
-% 	With Noise Type=timeaverage and ALL(AM,PM,USB,LSB), you can plot the AM and PM components as well as the total noise. In addition, you can plot phase noise and FM jitter results for oscillators. Plotting is done using the Direct Plot Form.
-% 	\href{https://community.cadence.com/cadence_blogs_8/b/rf/posts/virtuoso-video-diary-noise-simulation-in-spectre-rf-using-improved-pnoise-hbnoise-and-direct-plot-form-options}{\textbf{External link}}
-% \end{info}
+\section{Reading books and papers on the matter}
 
-%----------------------------------------------------------------------------------------
-% \section{Technical Requirements}
+
+\subsection{Load-pull contours}
+
+The load-pull method of RF and microwave power amplifier design, John F. Sevic, Ph.D.
+
+% Optimum Impedance Identification
+
+% A Theory for the Prediction of GaAs FET Load-Pull Power Contours, S. Cripps, 1983
+% predicting the load-pull counturs
+% manually using mechanical tuners is a very laborious operation
+% so computer aided test by Cripps is presented
+% Load-pull counturs are not circles because of the non linearity of the power amplifier driven into saturation.
+% 
+
+%
+
+
+\subsection{Shive wave machine}
+
+The Shive wave machine, a clever instrument that uses torsion on a wire and suspended weights to propagate a wave that is easy to observe. This machine will help you visualize:
+\begin{itemize}
+	\item Transmission lines
+	\item Propagation velocity
+	\item Wavelength
+	\item Impedance
+	\item Matched loads
+	\item Reflections from short and open circuits
+	\item Standing waves
+	\item Standing wave ratio
+	\item Reflection coefficient
+	\item Resonance and tuning
+	\item Quarter-wave matching networks
+	\item Tapered transformers
+\end{itemize}
+
 
 
 % \begin{table}[ht]
