@@ -33,7 +33,7 @@
 %	ASSIGNMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{Power Amplifier - SiFlower cn} % Title of the assignment
+\title{ IO/IO Ring Placement and EMIR Analysis-- OBSOLETE Power Amplifier - SiFlower cn} % Title of the assignment
 
 \author{Aleksandar Vuković} % Author name and email address
 
@@ -44,6 +44,124 @@
 \begin{document}
 
 \maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\section*{Introduction - IO/IO ring} % Unnumbered section
+
+IO/IO ring placement with ESD protection and EMIR analysis/ isolation, noise analysis for the whole chip. There is already a good template in place with test benches from our recent testchip. \\
+
+Questions: \\
+
+Are IO/IO ring and PAD ring the same thing? 
+
+\begin{info}
+
+	Pad ring is a ring around the chip that contains all the pads (chip IOs) and ESD protection structures. It's usually one of the things that is handled by part of the layout team - there'll be a lot of interaction between people that are developing the package (making sure that all IOs are routable to where they need to be) as well as making sure that things get internally to the right places with high enough efficiency.
+
+\end{info}
+
+So what's exactly in the pads? Just the ESD protection circuits? Aren't chip IOs pins basically? Shouldn't pins be attached to the actual macro?
+
+\begin{info}
+	Pads will have I/O drivers and ESD protection - additionally, they will have areas where the chip can be touched down on when it is tested in wafer form and (for parts that are wirebonded) areas where the chip can be bonded out.They will be connected to any internal macros also, yes
+\end{info}
+
+
+And what does routability mean?
+
+
+
+So you've got a pad ring:
+
+\begin{verbatim}
+[][][][][][][][][][]
+[]                []
+[]                []
+[]                []
+[]                []
+[]                []
+[]                []
+[]                []
+[]                []
+[][][][][][][][][][]
+\end{verbatim}
+
+\begin{info}
+	
+	And it's got to get mapped to external pins somehow - if it's getting mapped to an XxY ball array it'll either be bonded out to a substrate that will have a few layers to route pads to the destination ball (wirebonded packages) or routed to bumps/pillars that will get attached to the final substrate (flip-chip) or routed to a redistribution layer (RDL) that maps to a ball array directly on the part (WLCSP).
+
+	Checking routability is a combination of making sure that you can route things from the origination point on the pad ring to the place where it's actually going to interface to the system - there is a flip side to this which is checking that the ball array has things placed properly so that a system board can be constructed without excessive numbers of blind vias and without requiring too many layers (that signals are able to escape from the ball array).
+
+\end{info}
+
+
+\section{How to design a pad ring?}
+
+Need to design a pad ring for my ADC chip, but I knew very little about this (I have some experience in analog IC design though). Is there any resources to begin with?
+
+\begin{info}
+	
+	Do you have pdk pad and fill cells? Most important thing is planning (of ESD and supply/gnd domains). Depending on technology and packaging you should make sure to select the proper ones (bondwire/probing vs balling/flipchip).
+
+\end{info}
+
+
+\begin{info}
+	
+	The main objective of the pad ring is to mate up the cell I/O with the board. The secondary function is to provide ESD protection. Usually answering a few questions will provide you with how to proceed.
+
+	Use foundry or company-supplied I/O cells (our company has an I/O compiler that creates a proper library). There are separate I/O cells and methodologies for wire bond, FBGA, and WLBGA-type packaging. Someone should have an idea about the board and thus the package + pinout. There will likely be (at a minimum) ESD clamp/vdd padcells, vss padcells, digital I/O padcells, analog thru padcells, and analog secondary protection padcells.
+
+	There are foundry-supplied DRC rules that are specific to pad rings - the padcells should already be designed with these rules in mind. Additional you will need to consider IR drop from a padcell to the nearest ESD clamp and vss connections. You may have to place additional ESD clamp and vss padcells in your pad ring to meet these maximum resistances.
+
+	The chip cells should hopefully be floor planned with the pinout/ballout in mind. If you have a wirebond package the the routing from cell to pad ring is straight forward. If you have a type of BGA then there should be at least one (and maybe 2-3) thick RDL top metal layers which are for routing from pad ring to the ball and then likely close to the cell. This is more complicated as there may be another packaging route (FBGA) or board route (WLBGA) to consider.
+
+	Unfortunately I am not aware of a good resource that covers everything. If you can narrow down your package type then googling will probably give you some good package vendor documentation.
+
+\end{info}
+
+\begin{info}
+
+	Use the IP pads (ARM, Aragio, etc.) for your process if you have access to them. It will reduce tapeout risk but also can be a pain to import into Virtuoso. Use analog IO pads for analog inputs and digital IO pads for the digital I/Os, and VDD and ground pads for power and power clamp. Depending on your design, you may have separate IO and core voltage supplies - don't forget those. The IP pad documentation will have all the information you need on how to use the cells. Don't forget to include the actual physical bond pad as this is not usually in the ESD IO cells in the library. Space and size bond pads according to requirements of your wire bonding vendor. Remember to consider IO pad parasitics in your simulations. If you are at an university, you may want to reach out to the IC design group there to guide you on this so that you get it right the first time.
+
+\end{info}
+	
+
+%----------------------------------------------------------------------------------------
+%	IO/IO ring placement
+%----------------------------------------------------------------------------------------
+\section{IO/IO ring placement}
+
+%----------------------------------------------------------------------------------------
+%	ESD protection
+%----------------------------------------------------------------------------------------
+\section{ESD protection}
+
+%----------------------------------------------------------------------------------------
+%	EMIR analysis
+%----------------------------------------------------------------------------------------
+\section{EMIR analysis}
+Cadence Guidelines
+
+EMIR is ex-Voltus
+
+https://community.cadence.com/cadence_blogs_8/b/cic/posts/using-spectre-aps-for-analysing-emir
+
+
+%----------------------------------------------------------------------------------------
+%	Isolation, noise analysis for the whole chip
+%----------------------------------------------------------------------------------------
+\section{Isolation, noise analysis for the whole chip}
+
+
+
+
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
 
 %----------------------------------------------------------------------------------------
 %	INTRODUCTION
